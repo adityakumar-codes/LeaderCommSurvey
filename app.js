@@ -1,5 +1,3 @@
-//const fs = require("fs");
-
 const reader = require("./ScoringKey/utils/appSheetReader");
 const csvWriter = require("./ScoringKey/utils/csvWriter");
 const evaluator = require("./evaluator");
@@ -14,19 +12,17 @@ formData.forEach(data => {
   var communication = evaluator.communicationSum(data);
 
   var outputOBJ = {
-    id: data["Email Address"],
-    leadership_AdministrativeSkill: leadership.administrativeSkill,
-    leadership_InterPersonalSKill: leadership.interPersonalSkill,
-    leadership_ConceptualSkill: leadership.conceptualSkill,
-    communication: communication.communicationScore
+    id: data["Email address"],
+    Name: data["Name"],
+    "Administrative skill": leadership.administrativeSkill,
+    "InterPersonal skill": leadership.interPersonalSkill,
+    "Conceptual skill": leadership.conceptualSkill,
+    "Clarity of communication": communication["clarity of communication"],
+    "Ability to get feedback": communication["Ability to get feedback"],
+    "Handle emotions": communication["handle emotions"],
+    "Listening skills": communication["listening skills"]
   };
-  //console.log(outputOBJ);
-  // csvWriter.toCSV(outputOBJ);
   output.push(outputOBJ);
-  //console.log(leadership);
-  //console.log(communication);
 });
 
-//console.log(formData);
 csvWriter.toCSV(output);
-//console.log(JSON.parse(answers));

@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const toCSV = function(objArray) {
   var array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
-  console.log(objArray);
+  //console.log(objArray);
 
   var str = "";
 
@@ -15,11 +15,6 @@ const toCSV = function(objArray) {
   for (var i = 0; i < array.length; i++) {
     var line = "";
 
-    //    for (var index in array[i]) {
-    //    line += array[i][index] + ",";
-    // }
-
-    // Here is an example where you would wrap the values in double quotes
     for (var index in array[i]) {
       line += '"' + array[i][index] + '",';
     }
@@ -28,15 +23,11 @@ const toCSV = function(objArray) {
 
     str += line + "\r\n";
   }
-  //console.log(str);
 
   fs.writeFile("output.csv", str, error => {
     if (error) console.log(error);
-    else console.log("sss ");
+    else console.log("");
   });
-  //window.open( "data:text/csv;charset=utf-8," + escape(str))
 };
-
-//toCSV(objArray);
 
 module.exports = { toCSV: toCSV };

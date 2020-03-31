@@ -53,21 +53,44 @@ const leadershipSum = function(data) {
 };
 
 const communicationSum = function(data) {
-  const commStart = 25;
-  const commEnd = 63;
+  /* 
+*
+sclarity of communication: 1+ 4+6+8+19+23+26+27+32+38
+Ability to get feedback: 2+13+16+20+21+22+24+25+37+40
+handle emotions: 3+7+11+12+14+15+17+18+28+36
+listening skills: 5+9+10+29+30+31+33+34+35+39
+Above Average: 20-30
+Average: 10-20
+Below Average: 0-10   
+*
+*/
+  const clarity_of_communication = [0, 3, 5, 7, 18, 22, 25, 26, 32, 37];
+  const ability_feedback = [1, 12, 15, 19, 20, 21, 23, 24, 36, 39];
+  const handle_emotions = [2, 6, 10, 11, 13, 14, 16, 17, 27, 35];
 
+  const commStart = 25;
+  const commEnd = 64;
+
+  var coc = 0;
+  var af = 0;
+  var he = 0;
+  var ls = 0;
   var looper = 0;
+
   var answers = fs.readFileSync("ScoringKey/CommScoringKey.json");
   answers = JSON.parse(answers);
 
   var comScore = 0;
-  var counter = 1;
 
   for (let prop in data) {
     if (looper >= commStart && looper <= commEnd) {
-      // console.log(looper - commStart);
-      // console.log(counter + " " + prop + "");
-      counter -= -1;
+      if (clarity_of_communication.indexOf(looper - commStart) != -1)
+        coc += parseInt(answers[looper - commStart][data[prop]]);
+      else if (ability_feedback.indexOf(looper - commStart) != -1)
+        af += parseInt(answers[looper - commStart][data[prop]]);
+      else if (handle_emotions.indexOf(looper - commStart) != -1)
+        he += parseInt(answers[looper - commStart][data[prop]]);
+      else ls += parseInt(answers[looper - commStart][data[prop]]);
 
       comScore += parseInt(answers[looper - commStart][data[prop]]);
     }
@@ -75,7 +98,27 @@ const communicationSum = function(data) {
     looper += 1;
   }
 
-  const communication = { communicationScore: comScore };
+  const communication = {
+    "clarity of communication": coc,
+    "Ability to get feedback": af,
+    "handle emotions": he,
+    "listening skills": ls
+  };
+  /*
+  *
+Above Average: 20-30
+Average: 10-20
+Below Average: 0-10
+*
+*/
+
+  for (prop in communication)
+    if (communication[prop] >= 20 && communication <= 30)
+      communication[prop] = "Above Average";
+    else if (communication[prop] >= 10 && communication[prop] <= 20)
+      communication[prop] = "Average";
+    else communication[prop] = "Below Average";
+
   return communication;
 };
 
