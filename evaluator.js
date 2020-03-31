@@ -23,12 +23,31 @@ const leadershipSum = function(data) {
     }
     looper += 1;
   }
+  /*  Leadership Skills: 
+  If your score is 26–30, you are in the very high range.
+   If your score is 21–25, you are in the high range.
+   If your score is 16–20, you are in the moderate range.
+   If your score is 11–15, you are in the low range.
+   If your score is 6–10, you are in the very low range
+  */
 
-  const leadership = {
+  var leadership = {
     administrativeSkill: adminScore,
     interPersonalSkill: interScore,
     conceptualSkill: conceptScore
   };
+
+  for (prop in leadership) {
+    if (leadership[prop] >= 26 && leadership[prop] <= 30)
+      leadership[prop] = "very high";
+    else if (leadership[prop] >= 21 && leadership[prop] <= 25)
+      leadership[prop] = "high";
+    else if (leadership[prop] >= 16 && leadership[prop] <= 20)
+      leadership[prop] = "moderate";
+    else if (leadership[prop] >= 11 && leadership[prop] <= 15)
+      leadership[prop] = "low";
+    else leadership[prop] = "very low";
+  }
 
   return leadership;
 };
@@ -47,7 +66,7 @@ const communicationSum = function(data) {
   for (let prop in data) {
     if (looper >= commStart && looper <= commEnd) {
       // console.log(looper - commStart);
-     // console.log(counter + " " + prop + "");
+      // console.log(counter + " " + prop + "");
       counter -= -1;
 
       comScore += parseInt(answers[looper - commStart][data[prop]]);

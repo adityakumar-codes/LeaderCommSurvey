@@ -5,17 +5,13 @@ const csvWriter = require("./ScoringKey/utils/csvWriter");
 const evaluator = require("./evaluator");
 
 const formData = reader.readSheet("TestFormData.xlsx");
-//var answers = fs.readFileSync("ScoringKey/ScoringKey.json");
-//answers = JSON.parse(answers);
+
 var output = [];
 
 formData.forEach(data => {
   var looper = 0;
-
   var leadership = evaluator.leadershipSum(data);
   var communication = evaluator.communicationSum(data);
-
-  //console.log(data);
 
   var outputOBJ = {
     id: data["Email Address"],
