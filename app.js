@@ -1,5 +1,7 @@
 //const fs = require("fs");
 
+console.log("Hey abi wassup");
+
 const reader = require("./ScoringKey/utils/appSheetReader");
 const csvWriter = require("./ScoringKey/utils/csvWriter");
 const evaluator = require("./evaluator");
